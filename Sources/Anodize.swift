@@ -37,6 +37,12 @@ struct Anodize {
       let device = MTLCreateSystemDefaultDevice()!
       let library = try! device.makeLibrary(URL: URL(filePath: "anodize.metallib"))
 
-      print("function names: \(library.functionNames)")
+      for name in library.functionNames {
+          let function = library.makeFunction(name: name)
+
+          if function?.functionType == .kernel {
+              print("found kernel function: \(name)")
+          }
+      }
   }
 }

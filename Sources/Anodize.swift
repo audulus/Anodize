@@ -19,11 +19,18 @@ let args = ProcessInfo.processInfo.arguments
 @main
 struct Anodize {
   static func main() {
-      print("args: \(args)")
+      // print("args: \(args)")
 
       var files = args
       files.removeFirst()
 
       shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + files)
+
+      let airFiles = files.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
+
+      print("airfiles: \(airFiles)")
+
+      shell(["xcrun", "-sdk", "macosx", "metallib", "-o", "anodize.metallib"] + airFiles)
+      shell(["rm", "-f"] + airFiles)
   }
 }

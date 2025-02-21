@@ -7,7 +7,7 @@
 
 import Metal
 
-public extension MTLComputePipelineReflection {
+extension MTLComputePipelineReflection {
 
     func kernelWrapper(name: String, functionName: String, asBytes: [String]) -> String {
 

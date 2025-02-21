@@ -11,4 +11,5 @@ import Metal
 public enum AnodizeError: Error, Equatable {
     case bufferOOM
     case logicError(String)
+    case metalError(String)
 }

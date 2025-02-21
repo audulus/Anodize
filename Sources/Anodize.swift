@@ -3,6 +3,7 @@
 
 import Foundation
 import ArgumentParser
+import Metal
 
 @discardableResult
 func shell(_ args: [String]) -> Int32 {
@@ -28,9 +29,14 @@ struct Anodize {
 
       let airFiles = files.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
 
-      print("airfiles: \(airFiles)")
+      // print("airfiles: \(airFiles)")
 
       shell(["xcrun", "-sdk", "macosx", "metallib", "-o", "anodize.metallib"] + airFiles)
       shell(["rm", "-f"] + airFiles)
+
+      let device = MTLCreateSystemDefaultDevice()!
+      let library = try! device.makeLibrary(URL: URL(filePath: "anodize.metallib"))
+
+      print("function names: \(library.functionNames)")
   }
 }

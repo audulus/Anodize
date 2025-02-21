@@ -95,7 +95,7 @@ public extension MTLComputePipelineReflection {
                 result += "        }\n"
                 
             default:
-                print("unknown binding type")
+                print("unknown binding type for function \(functionName)")
             }
         }
 

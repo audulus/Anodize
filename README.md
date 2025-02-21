@@ -21,7 +21,7 @@ And then we can call it from Swift with type safety, and not having to worry abo
 let device = MTLCreateSystemDefaultDevice()!
 let kernel = MyCoolKernel(device: device)
 
-let array = try! MutableGPUArray<Float>(data: [1,2,3])
+let array = try MutableGPUArray<Float>(data: [1,2,3])
 
 let queue = device.makeCommandQueue()!
 let buf = queue.makeCommandBuffer()!

@@ -6,6 +6,12 @@ import PackageDescription
 let package = Package(
     name: "Anodize",
     platforms: [.macOS(.v15)],
+    products: [
+        .executable(name: "Anodize", targets: ["Anodize"]),
+        .library(
+            name: "AnodizeUtil",
+            targets: ["AnodizeUtil"])
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
     ],

@@ -5,6 +5,8 @@
 //  Created by Taylor Holliday on 2/21/25.
 //
 
+import Metal
+
 public extension MTLDevice {
     func makeBuffer<T>(_ array: [T]) -> MTLBuffer? {
         array.withUnsafeBytes { ptr in

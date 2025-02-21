@@ -59,7 +59,7 @@ struct Anodize {
 
               let reflection = computePipelineReflection(function: function)
 
-              contents += reflection.kernelWrapper(name: name, functionName: name, asBytes: [])
+              contents += reflection.kernelWrapper(name: name, functionName: name)
               count += 1
           }
       }

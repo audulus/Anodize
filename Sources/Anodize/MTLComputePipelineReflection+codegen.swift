@@ -9,9 +9,7 @@ import Metal
 
 extension MTLComputePipelineReflection {
 
-    func kernelWrapper(name: String, functionName: String, asBytes: [String]) -> String {
-
-        let asBytesSet = Set(asBytes)
+    func kernelWrapper(name: String, functionName: String) -> String {
 
         var result = "class " + name + " {\n"
 
@@ -37,21 +35,19 @@ extension MTLComputePipelineReflection {
 
                 let bufferBinding = binding as! MTLBufferBinding
 
-                if asBytesSet.contains(binding.name) {
+                if let swiftName = bufferBinding.bufferDataType.swiftName {
+                    result += "        func \(binding.name)(bytes value: \(swiftName)) -> Self {\n"
+                    result += "            enc.setBytes(value, index: \(binding.index))\n"
+                    result += "            return self\n"
+                    result += "        }\n"
+                } else {
+                    result += "        func \(binding.name)<T>(bytes value: T) -> Self {\n"
+                    result += "            enc.setBytes(value, index: \(binding.index))\n"
+                    result += "            return self\n"
+                    result += "        }\n"
+                }
 
-                    if let swiftName = bufferBinding.bufferDataType.swiftName {
-                        result += "        func \(binding.name)(_ value: \(swiftName)) -> Self {\n"
-                        result += "            enc.setBytes(value, index: \(binding.index))\n"
-                        result += "            return self\n"
-                        result += "        }\n"
-                    } else {
-                        result += "        func \(binding.name)<T>(_ value: T) -> Self {\n"
-                        result += "            enc.setBytes(value, index: \(binding.index))\n"
-                        result += "            return self\n"
-                        result += "        }\n"
-                    }
-
-                } else if let swiftName = bufferBinding.bufferDataType.swiftName {
+                if let swiftName = bufferBinding.bufferDataType.swiftName {
 
                     switch binding.access {
                     case .readOnly:

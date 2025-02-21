@@ -35,5 +35,7 @@ try kernel
 
 buf.commit()
 buf.waitUntilCompleted()
+
+print("array: \(array.array)") // prints [2.0, 3.0, 4.0]
         
 ```

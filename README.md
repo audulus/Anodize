@@ -2,7 +2,7 @@
 
 Type safety for Metal.
 
-Suppose I've got the following MSL kernel:
+Suppose we've got the following MSL kernel:
 
 ```Metal
 kernel void MyCoolKernel(device float* buffer,
@@ -12,9 +12,9 @@ kernel void MyCoolKernel(device float* buffer,
 }
 ```
 
-I do `swift run Anodize MyCoolKernel.metal` and get `Anodized.swift`
+We run `swift run Anodize MyCoolKernel.metal` which generates the file `Anodized.swift` which contains wrappers for our kernel(s).
 
-Then I can do the following:
+And then we can call it from Swift with type safety, and not having to worry about binding indices.
 
 ```Swift
 

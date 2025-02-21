@@ -16,7 +16,7 @@ extension MTLComputePipelineReflection {
         result += "    private var pipeline: MTLComputePipelineState\n"
         result += "    init(device: MTLDevice) { self.pipeline = device.makeComputePipeline(name: \"\(functionName)\") }\n"
         result += "    func begin(_ buf: MTLCommandBuffer) throws -> BindingWrapper {\n"
-        result += "        guard let enc = buf.makeComputeCommandEncoder() else { throw SculpturaError.metalError(\"couldn't create MTLComputeCommandEncoder\") }\n"
+        result += "        guard let enc = buf.makeComputeCommandEncoder() else { throw AnodizeError.metalError(\"couldn't create MTLComputeCommandEncoder\") }\n"
         result += "        enc.label = \"\(functionName)\"\n"
         result += "        enc.setComputePipelineState(pipeline)\n"
         result += "        return .init(enc: enc)\n"

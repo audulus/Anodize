@@ -1,6 +1,6 @@
 # Anodize
 
-Type safety for Metal.
+Type safety for Metal. 🤘
 
 Suppose we've got the following MSL kernel:
 

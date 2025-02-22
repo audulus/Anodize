@@ -2,6 +2,8 @@
 
 Type safety for Metal. 🤘
 
+Used in [Sculptura](https://sculptura.app/)
+
 Suppose we've got the following MSL kernel:
 
 ```Metal

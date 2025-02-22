@@ -42,4 +42,4 @@ print("array: \(array.array)") // prints [2.0, 3.0, 4.0]
         
 ```
 
-You can adopt Anodize gradually in your codebase (as I'm doing in Sculptura). You don't have to use `GPUArray`, you can make another class that conforms to `GPUBufferProvider`. Vertex and fragment functions aren't yet supported.
+You can adopt Anodize gradually in your codebase (as I'm doing in Sculptura). You don't have to use `GPUArray`, you can make another class that conforms to `GPUBufferProvider`. You can even pass a raw `MTLBuffer` but you'll lose type safety (at least the binding indices will be correct). Vertex and fragment functions aren't yet supported.

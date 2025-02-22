@@ -41,3 +41,5 @@ buf.waitUntilCompleted()
 print("array: \(array.array)") // prints [2.0, 3.0, 4.0]
         
 ```
+
+You can adopt Anodize gradually in your codebase (as I'm doing in Sculptura). You don't have to use `GPUArray`, you can make another class that conforms to `GPUBufferProvider`. Vertex and fragment functions aren't yet supported.

@@ -42,4 +42,10 @@ print("array: \(array.array)") // prints [2.0, 3.0, 4.0]
         
 ```
 
-You can adopt Anodize gradually in your codebase (as I'm doing in Sculptura). You don't have to use `GPUArray`, you can make another class that conforms to `GPUBufferProvider`. You can even pass a raw `MTLBuffer` but you'll lose type safety (at least the binding indices will be correct). Vertex and fragment functions aren't yet supported.
+### Notes
+
+- Type safety is limited by Metal's reflection API. For user-defined types, we can only check the size is what is expected (this seems reasonably good).
+- You can adopt Anodize gradually in your codebase (as I'm doing in Sculptura).
+- You don't have to use `GPUArray`, you can make another class that conforms to `GPUBufferProvider`.
+- You can pass a raw `MTLBuffer` but you'll lose type safety (at least the binding indices will be correct).
+- Vertex and fragment functions aren't yet supported.

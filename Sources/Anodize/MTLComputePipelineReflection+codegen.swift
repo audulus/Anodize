@@ -35,16 +35,18 @@ extension MTLComputePipelineReflection {
 
                 let bufferBinding = binding as! MTLBufferBinding
 
-                if let swiftName = bufferBinding.bufferDataType.swiftName {
-                    result += "        func \(binding.name)(bytes value: \(swiftName)) -> Self {\n"
-                    result += "            enc.setBytes(value, index: \(binding.index))\n"
-                    result += "            return self\n"
-                    result += "        }\n"
-                } else {
-                    result += "        func \(binding.name)<T>(bytes value: T) -> Self {\n"
-                    result += "            enc.setBytes(value, index: \(binding.index))\n"
-                    result += "            return self\n"
-                    result += "        }\n"
+                if binding.access == .readOnly {
+                    if let swiftName = bufferBinding.bufferDataType.swiftName {
+                        result += "        func \(binding.name)(bytes value: \(swiftName)) -> Self {\n"
+                        result += "            enc.setBytes(value, index: \(binding.index))\n"
+                        result += "            return self\n"
+                        result += "        }\n"
+                    } else {
+                        result += "        func \(binding.name)<T>(bytes value: T) -> Self {\n"
+                        result += "            enc.setBytes(value, index: \(binding.index))\n"
+                        result += "            return self\n"
+                        result += "        }\n"
+                    }
                 }
 
                 if let swiftName = bufferBinding.bufferDataType.swiftName {

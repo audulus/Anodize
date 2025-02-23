@@ -3,7 +3,6 @@ import Foundation
 import ArgumentParser
 import Metal
 
-@discardableResult
 func shell(_ args: [String]) -> Int32 {
     let task = Process()
     task.launchPath = "/usr/bin/env"
@@ -42,14 +41,19 @@ struct Anodize: ParsableCommand {
             library = try! device.makeLibrary(URL: URL(filePath: file))
         } else {
 
-            shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + inputFiles)
+            if shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + inputFiles) != 0 {
+                print("⚠️ failed to compile metal files")
+                return
+            }
 
             let airFiles = inputFiles.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
 
             // print("airfiles: \(airFiles)")
 
-            shell(["xcrun", "-sdk", "macosx", "metallib", "-o", "anodize.metallib"] + airFiles)
-
+            if shell(["xcrun", "-sdk", "macosx", "metallib", "-o", "anodize.metallib"] + airFiles) != 0 {
+                print("⚠️ failed to link metal files")
+                return
+            }
 
             for file in airFiles { try! mgr.removeItem(atPath: file) }
 

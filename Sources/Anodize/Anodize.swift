@@ -33,7 +33,10 @@ struct Anodize: ParsableCommand {
         // print("args: \(args)")
 
         let mgr = FileManager.default
-        let device = MTLCreateSystemDefaultDevice()!
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            print("⚠️ failed to create metal device")
+            return
+        }
 
         let library: MTLLibrary
 

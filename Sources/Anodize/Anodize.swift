@@ -21,11 +21,13 @@ func computePipelineReflection(function: MTLFunction) -> MTLComputePipelineRefle
     return try! device.makeComputePipelineState(descriptor: computeDesc, options: [.bindingInfo, .bufferTypeInfo]).1!
 }
 
-let args = ProcessInfo.processInfo.arguments
-
 @main
-struct Anodize {
-    static func main() {
+struct Anodize: ParsableCommand {
+
+    @Argument(help: "A list of input file paths.")
+    var inputFiles: [String]
+
+    mutating func run() throws {
         // print("args: \(args)")
 
         let mgr = FileManager.default
@@ -33,16 +35,13 @@ struct Anodize {
 
         let library: MTLLibrary
 
-        var files = args
-        files.removeFirst()
-
-        if let file = files.first, file.hasSuffix(".metallib") {
+        if let file = inputFiles.first, file.hasSuffix(".metallib") {
             library = try! device.makeLibrary(URL: URL(filePath: file))
         } else {
 
-            shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + files)
+            shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + inputFiles)
 
-            let airFiles = files.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
+            let airFiles = inputFiles.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
 
             // print("airfiles: \(airFiles)")
 

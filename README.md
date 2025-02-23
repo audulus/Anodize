@@ -14,7 +14,7 @@ kernel void MyCoolKernel(device float* buffer,
 }
 ```
 
-Running `swift run Anodize MyCoolKernel.metal` generates the file `Anodized.swift` which contains wrappers for our kernel(s).
+Running `swift run Anodize MyCoolKernel.metal -o Anodized.swift` generates the file `Anodized.swift` which contains wrappers for our kernel(s).
 
 And then call the kernel from Swift with type safety, without worrying about binding indices. 😎
 

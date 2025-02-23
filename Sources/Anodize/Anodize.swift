@@ -27,6 +27,9 @@ struct Anodize: ParsableCommand {
     @Argument(help: "A list of input file paths.")
     var inputFiles: [String]
 
+    @Option(name: [.short, .customLong("output")], help: "File to write generated wrapper code.")
+    var outputFile: String
+
     mutating func run() throws {
         // print("args: \(args)")
 
@@ -74,7 +77,7 @@ struct Anodize: ParsableCommand {
 
         print("🤘 anodized \(count) kernel functions")
 
-        try! contents.write(to: URL(filePath: "Anodized.swift"), atomically: true, encoding: .utf8)
+        try! contents.write(to: URL(filePath: outputFile), atomically: true, encoding: .utf8)
 
         if mgr.fileExists(atPath: "anodize.metallib") {
             try! mgr.removeItem(atPath: "anodize.metallib")

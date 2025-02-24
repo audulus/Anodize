@@ -43,6 +43,7 @@ extension MTLComputePipelineReflection {
                         result += "        }\n"
                     } else {
                         result += "        func \(binding.name)<T>(bytes value: T) -> Self {\n"
+                        result += "            assert(MemoryLayout<T>.size == \(bufferBinding.bufferDataSize))\n"
                         result += "            enc.setBytes(value, index: \(binding.index))\n"
                         result += "            return self\n"
                         result += "        }\n"

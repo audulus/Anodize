@@ -92,7 +92,11 @@ extension MTLComputePipelineReflection {
                 result += "            enc.setTexture(texture, index: \(binding.index))\n"
                 result += "            return self\n"
                 result += "        }\n"
-                
+
+            case .imageblock:
+                // Nothing to do for imageblocks, I think.
+                break
+
             default:
                 print("unknown binding type for function \(functionName)")
             }

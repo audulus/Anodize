@@ -53,23 +53,23 @@ extension MTLDataType {
         case .half4:
             return "SIMD4<Float16>"
         case .half2x2:
-            return nil
+            return "simd_half2x2"
         case .half2x3:
-            return nil
+            return "simd_half2x3"
         case .half2x4:
-            return nil
+            return "simd_half2x4"
         case .half3x2:
-            return nil
+            return "simd_half3x2"
         case .half3x3:
-            return nil
+            return "simd_half3x3"
         case .half3x4:
-            return nil
+            return "simd_half3x4"
         case .half4x2:
-            return nil
+            return "simd_half4x2"
         case .half4x3:
-            return nil
+            return "simd_half4x3"
         case .half4x4:
-            return nil
+            return "simd_half4x4"
         case .int:
             return "Int32"
         case .int2:

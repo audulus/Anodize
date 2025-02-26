@@ -21,7 +21,7 @@ func computePipelineReflection(function: MTLFunction) -> MTLComputePipelineRefle
 }
 
 @main
-struct Anodize: ParsableCommand {
+struct Anodize: AsyncParsableCommand {
 
     @Argument(help: "A list of input file paths.")
     var inputFiles: [String]
@@ -29,7 +29,7 @@ struct Anodize: ParsableCommand {
     @Option(name: [.short, .customLong("output")], help: "File to write generated wrapper code.")
     var outputFile: String
 
-    mutating func run() throws {
+    mutating func run() async throws {
         // print("args: \(args)")
 
         let mgr = FileManager.default

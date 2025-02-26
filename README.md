@@ -54,7 +54,7 @@ Then create a Run Script build phase. Be sure to move it before the Compile Sour
 
 ![run script build phase](runscript.png)
 
-Set the `Input Files` to your metal files you are compiling, and output file to the generated file:
+Set the `Input Files` to your metal files you are compiling, and `Output Files` to the generated file:
 
 <img src="inputfiles.png" alt="input files" style="width:50%;">
 

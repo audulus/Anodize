@@ -42,6 +42,26 @@ print("array: \(array.array)") // prints [2.0, 3.0, 4.0]
         
 ```
 
+### Xcode Integration
+
+You can run Anodize on every build when you change your metal files. It's actually pretty quick, because it doesn't have to run the compiler backend and it compiles in parallel. Sculptura has about 60 kernels and it takes about 2.5s on my Mac Mini M2.
+
+First, unforunately, you need to disable script sandboxing because Anodize uses Metal:
+
+<img src="sandbox.png" alt="script sandboxing" style="width:50%;">
+
+Then create a Run Script build phase. Be sure to move it before the Compile Sources build phase:
+
+<img src="runscript.png" alt="run script build phase" style="width:50%;">
+
+Set the `Input Files` to your metal files you are compiling, and output file to the generated file:
+
+<img src="inputfiles.png" alt="input files" style="width:50%;">
+
+<img src="outputfiles.png" alt="output files" style="width:50%;">
+
+See the [demo project](./Demo/AnodizeDemo/) for an example.
+
 ### Notes
 
 - Type safety is limited by Metal's reflection API. For user-defined types, we can only check the size is what is expected (this seems reasonably good).

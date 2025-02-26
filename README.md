@@ -52,7 +52,7 @@ First, unforunately, you need to disable script sandboxing because Anodize uses 
 
 Then create a Run Script build phase. Be sure to move it before the Compile Sources build phase:
 
-<img src="runscript.png" alt="run script build phase" style="width:50%;">
+![run script build phase](runscript.png)
 
 Set the `Input Files` to your metal files you are compiling, and output file to the generated file:
 

@@ -28,8 +28,8 @@ extension MTLComputePipelineReflection {
 
             switch binding.type {
             case .buffer:
-                result += "        func bind_\(binding.name)(_ buffer: MTLBuffer) -> Self {\n"
-                result += "            enc.setBuffer(buffer, index: \(binding.index))\n"
+                result += "        func \(binding.name)(buffer: MTLBuffer, offset: Int = 0) -> Self {\n"
+                result += "            enc.setBuffer(buffer, offset: offset, index: \(binding.index))\n"
                 result += "            return self\n"
                 result += "        }\n"
 

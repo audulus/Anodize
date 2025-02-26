@@ -57,6 +57,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29D86DF32D691751008455B8 /* Build configuration list for PBXNativeTarget "AnodizeDemo" */;
 			buildPhases = (
+				2907F24D2D6F9CFD00B48EB0 /* ShellScript */,
 				29D86DE02D691750008455B8 /* Sources */,
 				29D86DE12D691750008455B8 /* Frameworks */,
 				29D86DE22D691750008455B8 /* Resources */,
@@ -122,6 +123,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2907F24D2D6F9CFD00B48EB0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/AnodizeDemo/MyCoolKernel.metal",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/AnodizeDemo/Anodized.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swift run Anodize $SRCROOT/AnodizeDemo/MyCoolKernel.metal -o $SRCROOT/AnodizeDemo/Anodized.swift\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29D86DE02D691750008455B8 /* Sources */ = {

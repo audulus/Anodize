@@ -12,12 +12,29 @@ func shell(_ args: [String]) -> Int32 {
     return task.terminationStatus
 }
 
+/// Runs multiple shell commands in parallel, limited by available CPU cores
+func runCommandsInParallel(commands: [[String]]) async {
+    await withTaskGroup(of: Void.self) { group in
+        for command in commands {
+            group.addTask {
+                if shell(command) != 0 {
+                    print("⚠️ failed to compile metal file")
+                }
+            }
+        }
+    }
+}
+
 func computePipelineReflection(function: MTLFunction) -> MTLComputePipelineReflection {
 
     let device = MTLCreateSystemDefaultDevice()!
     let computeDesc = MTLComputePipelineDescriptor()
     computeDesc.computeFunction = function
     return try! device.makeComputePipelineState(descriptor: computeDesc, options: [.bindingInfo, .bufferTypeInfo]).1!
+}
+
+func replaceExtension(path: String, ext: String) -> String {
+    URL(filePath: path).deletingPathExtension().appendingPathExtension(ext).lastPathComponent
 }
 
 @main
@@ -44,12 +61,11 @@ struct Anodize: AsyncParsableCommand {
             library = try! device.makeLibrary(URL: URL(filePath: file))
         } else {
 
-            if shell(["xcrun", "-sdk", "macosx", "metal", "-c"] + inputFiles) != 0 {
-                print("⚠️ failed to compile metal files")
-                return
-            }
+            await runCommandsInParallel(commands: inputFiles.map { file in
+                ["xcrun", "-sdk", "macosx", "metal", "-c", file, "-o", replaceExtension(path: file, ext: "air")]
+            })
 
-            let airFiles = inputFiles.map { URL(filePath: $0).deletingPathExtension().appendingPathExtension("air").lastPathComponent }
+            let airFiles = inputFiles.map { replaceExtension(path: $0, ext: "air") }
 
             // print("airfiles: \(airFiles)")
 

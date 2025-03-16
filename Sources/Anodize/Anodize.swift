@@ -86,7 +86,7 @@ struct Anodize: AsyncParsableCommand {
         contents += "import simd\n"
 
         var count = 0
-        for name in library.functionNames {
+        for name in library.functionNames.sorted() {
             let function = library.makeFunction(name: name)
 
             if let function, function.functionType == .kernel {

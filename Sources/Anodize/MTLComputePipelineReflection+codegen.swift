@@ -54,13 +54,13 @@ extension MTLComputePipelineReflection {
 
                     switch binding.access {
                     case .readOnly:
-                        result += "        func \(binding.name)(_ array: any GPUBufferProvider<\(swiftName)>) -> Self {\n"
-                        result += "            enc.setBuffer(array, index: \(binding.index))\n"
+                        result += "        func \(binding.name)(_ array: any GPUBufferProvider<\(swiftName)>, offset: Int = 0) -> Self {\n"
+                        result += "            enc.setBuffer(array, index: \(binding.index), offset: offset)\n"
                         result += "            return self\n"
                         result += "        }\n"
                     case .readWrite, .writeOnly:
-                        result += "        func \(binding.name)(_ array: any MutableGPUBufferProvider<\(swiftName)>) -> Self {\n"
-                        result += "            enc.setBuffer(array, index: \(binding.index))\n"
+                        result += "        func \(binding.name)(_ array: any MutableGPUBufferProvider<\(swiftName)>, offset: Int = 0) -> Self {\n"
+                        result += "            enc.setBuffer(array, index: \(binding.index), offset: offset)\n"
                         result += "            return self\n"
                         result += "        }\n"
                     default:
@@ -71,15 +71,15 @@ extension MTLComputePipelineReflection {
 
                     switch binding.access {
                     case .readOnly:
-                        result += "        func \(binding.name)<T>(_ array: any GPUBufferProvider<T>) -> Self {\n"
+                        result += "        func \(binding.name)<T>(_ array: any GPUBufferProvider<T>, offset: Int = 0) -> Self {\n"
                         result += "            assert(MemoryLayout<T>.size == \(bufferBinding.bufferDataSize))\n"
-                        result += "            enc.setBuffer(array, index: \(binding.index))\n"
+                        result += "            enc.setBuffer(array, index: \(binding.index), offset: offset)\n"
                         result += "            return self\n"
                         result += "        }\n"
                     case .readWrite, .writeOnly:
-                        result += "        func \(binding.name)<T>(_ array: any MutableGPUBufferProvider<T>) -> Self {\n"
+                        result += "        func \(binding.name)<T>(_ array: any MutableGPUBufferProvider<T>, offset: Int = 0) -> Self {\n"
                         result += "            assert(MemoryLayout<T>.size == \(bufferBinding.bufferDataSize))\n"
-                        result += "            enc.setBuffer(array, index: \(binding.index))\n"
+                        result += "            enc.setBuffer(array, index: \(binding.index), offset: offset)\n"
                         result += "            return self\n"
                         result += "        }\n"
                     default:

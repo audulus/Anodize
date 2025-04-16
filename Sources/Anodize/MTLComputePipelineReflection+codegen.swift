@@ -11,7 +11,7 @@ extension MTLComputePipelineReflection {
 
     func kernelWrapper(name: String, functionName: String) -> String {
 
-        var result = "class " + name + " {\n"
+        var result = "final class " + name + " : @unchecked Sendable {\n"
 
         result += "    private var pipeline: MTLComputePipelineState\n"
         result += "    init(device: MTLDevice) { self.pipeline = device.makeComputePipeline(name: \"\(functionName)\") }\n"

@@ -19,7 +19,7 @@ extension MTLComputePipelineReflection {
         result += "        guard let enc = buf.makeComputeCommandEncoder() else { throw AnodizeError.metalError(\"couldn't create MTLComputeCommandEncoder\") }\n"
         result += "        enc.label = \"\(functionName)\"\n"
         result += "        enc.setComputePipelineState(pipeline)\n"
-        result += "        return .init(enc: enc)\n"
+        result += "        return BindingWrapper(enc: enc)\n"
         result += "    }\n"
         result += "    struct BindingWrapper {\n"
         result += "        let enc: MTLComputeCommandEncoder\n"

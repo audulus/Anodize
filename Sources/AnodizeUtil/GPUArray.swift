@@ -15,17 +15,24 @@ public class GPUArray<Element>: GPUBufferProvider, @unchecked Sendable {
         let count = data.count > 0 ? data.count : 1
 
         if let heap {
-            guard let buffer = data.withUnsafeBytes({ ptr in
-                heap.makeBuffer(length: count * MemoryLayout<Element>.size, options: .storageModeShared)
-            }) else {
+            guard let buffer = heap.makeBuffer(length: count * MemoryLayout<Element>.size,
+                                               options: .storageModeShared) else {
                 throw AnodizeError.bufferOOM
             }
             self.buffer = buffer
             let raw = UnsafeMutableRawBufferPointer(start: buffer.contents(), count: buffer.length)
             self.mutablePointer = raw.bindMemory(to: Element.self)
 
-            for (ix, elem) in data.enumerated() {
-                self.mutablePointer[ix] = elem
+            // One bulk copy rather than a store per element: the loop this replaces
+            // cost most of a second on a multi-million-vertex mesh. `update` keeps that
+            // loop's semantics exactly, and for the trivial types this holds it is a
+            // memcpy.
+            if let dst = self.mutablePointer.baseAddress {
+                data.withUnsafeBufferPointer { src in
+                    if let base = src.baseAddress {
+                        dst.update(from: base, count: data.count)
+                    }
+                }
             }
 
         } else {
